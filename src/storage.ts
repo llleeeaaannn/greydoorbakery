@@ -22,8 +22,11 @@ function writeJSON(key: string, value: unknown) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
-function usePersistentState<T>(key: string, initial: T) {
-  const [value, setValue] = useState<T>(() => readJSON<T>(key, initial));
+function usePersistentState<T>(key: string, initial: T, normalize?: (value: T) => T) {
+  const [value, setValue] = useState<T>(() => {
+    const stored = readJSON<T>(key, initial);
+    return normalize ? normalize(stored) : stored;
+  });
   useEffect(() => {
     writeJSON(key, value);
   }, [key, value]);
@@ -51,8 +54,17 @@ export function useItems() {
   return { items, addItem, updateItem, deleteItem };
 }
 
+// Only an inline data URL survives: earlier saves pointed at a bundled file
+// path that never existed, which broke both the menu logo and PNG export.
+function normalizeBakery(bakery: BakeryInfo): BakeryInfo {
+  if (bakery.logoDataUrl && !bakery.logoDataUrl.startsWith('data:')) {
+    return { ...bakery, logoDataUrl: null };
+  }
+  return bakery;
+}
+
 export function useBakeryInfo() {
-  return usePersistentState<BakeryInfo>(KEYS.bakery, SEED_BAKERY_INFO);
+  return usePersistentState<BakeryInfo>(KEYS.bakery, SEED_BAKERY_INFO, normalizeBakery);
 }
 
 function defaultMenu(): CurrentMenu {

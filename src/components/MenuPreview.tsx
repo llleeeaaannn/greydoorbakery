@@ -100,7 +100,7 @@ export const MenuPreview = forwardRef<HTMLDivElement, Props>(function MenuPrevie
           boxSizing: 'border-box',
         }}
       >
-        {bakery.logoDataUrl ? (
+        {bakery.logoDataUrl?.startsWith('data:') ? (
           <img
             src={bakery.logoDataUrl}
             alt=""

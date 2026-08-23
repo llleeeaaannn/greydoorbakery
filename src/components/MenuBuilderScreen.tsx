@@ -15,7 +15,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { toPng } from 'html-to-image';
+import { exportPng } from '../exportPng';
 import { useBakeryInfo, useCurrentMenu, useItems } from '../storage';
 import { MENU_34_HEIGHT, MENU_WIDTH, MenuPreview } from './MenuPreview';
 import { ScaledPreview } from './ScaledPreview';
@@ -77,7 +77,7 @@ export function MenuBuilderScreen() {
         await document.fonts.ready;
       }
       const node = menuRef.current;
-      const dataUrl = await toPng(node, {
+      const dataUrl = await exportPng(node, {
         width: node.offsetWidth,
         height: node.offsetHeight,
         pixelRatio: 1,
@@ -104,7 +104,7 @@ export function MenuBuilderScreen() {
         await document.fonts.ready;
       }
       const node = menu34Ref.current;
-      const dataUrl = await toPng(node, {
+      const dataUrl = await exportPng(node, {
         width: MENU_WIDTH,
         height: MENU_34_HEIGHT,
         pixelRatio: 1,

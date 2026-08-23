@@ -15,5 +15,5 @@ export const SEED_BAKERY_INFO: BakeryInfo = {
   address: '123 Example Street, Your Town',
   contact: 'message @greydoorbakery or 086323040 to order',
   footerNote: 'Order by Thursday evening · Collection on Saturday morning',
-  logoDataUrl: '/logo.png',
+  logoDataUrl: null,
 };

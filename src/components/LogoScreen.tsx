@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { toPng } from 'html-to-image';
+import { exportPng } from '../exportPng';
 import { GreyDoorLogo } from './brand/GreyDoorLogo';
 
 const PALETTE: string[] = ['#B85C3E', '#3E4044', '#1E1F21', '#EFE9DD', '#FFFFFF'];
@@ -20,7 +20,7 @@ export function LogoScreen() {
       if (document.fonts && 'ready' in document.fonts) {
         await document.fonts.ready;
       }
-      const dataUrl = await toPng(node, {
+      const dataUrl = await exportPng(node, {
         width: CANVAS_SIZE,
         height: CANVAS_SIZE,
         pixelRatio: 2,

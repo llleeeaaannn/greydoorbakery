@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { toPng } from 'html-to-image';
+import { exportPng } from '../exportPng';
 import type { StudioAspectRatio, StudioLayer, StudioOverlayKey } from '../types';
 import { CANVAS_DIMENSIONS, PhotoCanvas } from './studio/PhotoCanvas';
 import { simplifyPath, toPolylinePath, toSmoothPath, type Point } from './studio/smoothing';
@@ -235,7 +235,7 @@ export function StudioScreen() {
         await document.fonts.ready;
       }
       const { width, height } = CANVAS_DIMENSIONS[aspectRatio];
-      const dataUrl = await toPng(node, {
+      const dataUrl = await exportPng(node, {
         width,
         height,
         pixelRatio: 2,
